@@ -50,5 +50,11 @@ pipeline{
                 sh "docker push kuber416/maven-web-application:1"
             }
         }
+
+      stage('depoly as container'){
+            steps {
+                sh "docker run -d --name mainprojectconatiner -p 9090:8080 kuber416/maven-web-application:1"
+            }
+        }
     }
 }
