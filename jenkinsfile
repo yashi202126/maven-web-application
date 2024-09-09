@@ -32,5 +32,12 @@ pipeline{
               }
             }
           }
+
+        stage ('nexus-artifact') {
+            steps {
+                nexusArtifactUploader artifacts: [[artifactId: 'maven-web-application', classifier: '', file: 'target/maven-web-application.war', type: 'war']], credentialsId: 'nexus', groupId: 'com.mt', nexusUrl: '54.211.126.47:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'main_project', version: '0.0.1-SNAPSHOT'
+
+                }
+            }
     }
 }
