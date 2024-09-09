@@ -1,0 +1,16 @@
+pipeline{
+    agent any
+    
+    tools {
+  maven 'maven'
+  
+}
+    stages {
+        stage('git-checkout') {
+            steps {
+         git credentialsId: 'github', url: 'https://github.com/kuber416/maven-web-application.git'
+            } 
+            
+        }
+  } 
+}
