@@ -44,5 +44,11 @@ pipeline{
                sh "docker build -t kuber416/maven-web-application:1 ."
            } 
         }   
+        stage('docker push to dokcer hub'){
+            steps {
+                sh "docker login -u kuber416 -p Kuber@416"
+                sh "docker push kuber416/maven-web-application:1"
+            }
+        }
     }
 }
