@@ -23,6 +23,7 @@ pipeline{
                 withSonarQubeEnv('SonarQube') {
                     sh 'mvn sonar:sonar -Dsonar.projectKey=maven_web_application'
                 }
-          } 
+         } 
     }
+}
 }
