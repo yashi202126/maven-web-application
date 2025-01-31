@@ -17,44 +17,5 @@ pipeline{
                 sh "mvn clean package"
              }
         }
-         stage('SonarQube Analysis') {
-            steps {
-                echo 'Running SonarQube analysis...'
-                withSonarQubeEnv('SonarQube') {
-                    sh 'mvn sonar:sonar -Dsonar.projectKey=maven_web_application'
-                }
-          } 
-     }
-        stage("Quality Gate") {
-            steps {
-              timeout(time: 1, unit: 'HOURS') {
-                waitForQualityGate abortPipeline: true
-              }
-            }
-          }
-
-        stage ('nexus-artifact') {
-            steps {
-                nexusArtifactUploader artifacts: [[artifactId: 'maven-web-application', classifier: '', file: 'target/maven-web-application.war', type: 'war']], credentialsId: 'nexus', groupId: 'com.mt', nexusUrl: '54.211.126.47:8081', nexusVersion: 'nexus3', protocol: 'http', repository: 'main_project', version: '0.0.1-SNAPSHOT'
-
-                }
-            }
-       stage ('docker-build'){
-           steps {
-               sh "docker build -t kuber416/maven-web-application:1 ."
-           } 
-        }   
-        stage('docker push to dokcer hub'){
-            steps {
-                sh "docker login -u kuber416 -p Kuber@416"
-                sh "docker push kuber416/maven-web-application:1"
-            }
-        }
-
-      stage('depoly as container'){
-            steps {
-                sh "docker run -d --name mainprojectconatiner -p 9090:8080 kuber416/maven-web-application:1"
-            }
-        }
     }
 }
