@@ -12,10 +12,15 @@ pipeline{
             } 
             
         }
-         stage ('maven-build') {
+     stage ('maven-build') {
             steps {
                 sh "mvn clean package"
              }
         }
-    }
+    stage ('docker-build'){
+           steps {
+               sh "docker build -t kuber416/maven-web-application:1 ."
+           } 
+        }   
+     }
 }
