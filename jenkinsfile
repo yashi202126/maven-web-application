@@ -38,7 +38,11 @@ pipeline {
        } 
        stage('depoly container In k8s via Jenkins') {
            steps {
-                  kubeconfig(credentialsId: 'kubernetes-cred', serverUrl: ' https://4BD913A239DDDE25758D2E0309B41D3E.gr7.ap-south-1.eks.amazonaws.com', caCertificate: credentials('kubernetes-ca-cert')) {
+                  kubeconfig(
+                    credentialsId: 'kubernetes-cred',
+                    serverUrl: 'https://4BD913A239DDDE2575802E0309841D3E.gr7.ap-south-1.eks.amazonaws.com',
+                    caCertificate: credentials('kubernetes-ca-cert')
+                    ) {
                   sh "kubectl apply -f mavenwebappdeployment.yaml"
                   }
                 }
