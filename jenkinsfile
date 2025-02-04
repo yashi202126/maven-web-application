@@ -1,3 +1,5 @@
+def TAG = "$BUILD_NUMBER"
+
 pipeline{
     agent any
     
@@ -6,37 +8,36 @@ pipeline{
   
 }
     stages {
-        stage('git-checkout') {
+        stage('git-Clone') {
             steps {
          git credentialsId: 'github', url: 'https://github.com/kuber416/maven-web-application.git'
             } 
             
         }
-     stage ('maven-build') {
+     stage (Build the package') {
             steps {
                 sh "mvn clean package"
              }
         }
-    stage ('docker-build'){
+    stage ('Build Docker Image'){
            steps {
-               sh "docker build -t kuber416/maven-web-application:1 ."
+               sh "docker build -t kuber416/maven-web-application:${TAG} ."
            } 
         } 
-    stage("Docker Login"){
+    stage("Push Docker image to Docker Hub registry"){
        withCredentials([string(credentialsId: 'DOCKER_HUB_PASSWORD', variable: 'DOCKER_HUB_PASSWORD')]) {
-            sh 'docker login -u kuber416 -p $DOCKER_HUB_PASSWORD'
+            sh "docker login -u kuber416 -p ${DOCKER_HUB_PASSWORD}"
+            sh "docker push kuber416/maven-web-application: ${TAG}"
        }
     }
-    stage('docker push to dokcer hub'){
+    stage ('update Yaml file' ) {
+      steps {
+         sh "sed -i 's/TAG/$TAG/' mavenwebappdeployment.yaml"
+       }
+   } 
+   stage('depoly container In k8s via Jenkins') {
             steps {
-             sh "docker push kuber416/maven-web-application:1"
-            }
-        }
-
-
-   stage('depoly as container'){
-            steps {
-                sh "docker run -d --name demousecases -p 9090:8080 kuber416/maven-web-application:1"
+                sh "kubectl apply -f mavenwebappdeployment.yaml"
          }
        }
      }
