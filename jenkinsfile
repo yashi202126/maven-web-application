@@ -31,10 +31,7 @@ pipeline {
                  }
             }
          }
-
-       stage(' push Docker image to Docker Hub registry')
-       
-        stage('update Yaml file') {
+      stage('update Yaml file') {
             steps {
                 sh "sed -i 's/TAG/$TAG/' mavenwebappdeployment.yaml"
            }
