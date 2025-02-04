@@ -31,5 +31,17 @@ pipeline {
                  }
               }
             }
-        }
-      }
+      stage('update Yaml file') {
+            steps {
+                sh "sed -i 's/TAG/$TAG/' mavenwebappdeployment.yaml"
+           }
+       } 
+       stage('depoly container In k8s via Jenkins') {
+           steps {
+                    kubeconfig(credentialsId: 'kubernetes-cred', serverUrl: '') {
+                    sh "kubectl apply -f mavenwebappdeployment.yaml"
+                 }
+               }
+            }
+         }
+       }
