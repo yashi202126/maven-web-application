@@ -38,8 +38,12 @@ pipeline {
        } 
        stage('depoly container In k8s via Jenkins') {
            steps {
-               sh "kubectl apply -f mavenwebappdeployment.yaml"
+               script {
+                withAWS(credentials: 'AWS-CREDS', region: 'ap-south-1') {
+                    sh "aws eks update-kubeconfig --name demo_usecases --region ap-south-1"
+                    sh "kubectl apply -f mavenwebappdeployment.yaml"
           }
         }
      }
    }
+}
