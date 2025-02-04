@@ -36,16 +36,11 @@ pipeline {
                 sh "sed -i 's/TAG/$TAG/' mavenwebappdeployment.yaml"
            }
        } 
-       stage('depoly container In k8s via Jenkins') {
+       stage('Deploy to kubernetes EKS') {
            steps {
-                  kubeconfig(
-                    credentialsId: 'kubernetes-cred',
-                    serverUrl: 'https://4BD913A239DDDE2575802E0309841D3E.gr7.ap-south-1.eks.amazonaws.com',
-                    caCertificate: credentials('kubernetes-ca-cert')
-                    ) {
+                  withkubeconfig([credentialsId: 'kubernetes-cred'])
                   sh "kubectl apply -f mavenwebappdeployment.yaml"
                   }
                 }
               }
            }
-         }
