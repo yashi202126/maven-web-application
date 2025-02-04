@@ -23,6 +23,7 @@ pipeline {
                sh "docker build -t kuber416/maven-web-application:${TAG} ."
             } 
          } 
+
         stage('Push Docker image to Docker Hub registry') {
             steps {
             withCredentials([string(credentialsId: 'DOCKER_HUB_PASSWORD', variable: 'DOCKER_HUB_PASSWORD')]) {
@@ -30,6 +31,9 @@ pipeline {
                  sh "docker push kuber416/maven-web-application:${TAG}"
            }
         }
+
+       stage(' push Docker image to Docker Hub registry')
+       
         stage('update Yaml file') {
             steps {
                 sh "sed -i 's/TAG/$TAG/' mavenwebappdeployment.yaml"
