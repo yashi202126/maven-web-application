@@ -14,12 +14,12 @@ pipeline{
             } 
             
         }
-     stages ('Build the package') {
+     stage('Build the package') {
             steps {
                 sh "mvn clean package"
              }
         }
-    stage ('Build Docker Image'){
+    stage('Build Docker Image'){
            steps {
                sh "docker build -t kuber416/maven-web-application:${TAG} ."
            } 
@@ -30,7 +30,7 @@ pipeline{
             sh "docker push kuber416/maven-web-application: ${TAG}"
        }
     }
-    stage ('update Yaml file' ) {
+    stage('update Yaml file' ) {
       steps {
          sh "sed -i 's/TAG/$TAG/' mavenwebappdeployment.yaml"
        }
