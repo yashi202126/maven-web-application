@@ -1,55 +1,52 @@
-def TAG = "$BUILD_NUMBER"
-
 pipeline {
     agent any
-    
- tools {
-  maven "MAVEN"
-  
-}
+    tools {
+        maven "MAVEN"
+    }
+    environment {
+        TAG = "${BUILD_NUMBER}"
+    }
     stages {
         stage('git-Clone') {
             steps {
-         git credentialsId: 'github', url: 'https://github.com/kuber416/maven-web-application.git'
-            } 
-         }
+                git credentialsId: 'github', url: 'https://github.com/kuber416/maven-web-application.git'
+            }
+        }
         stage('Build the package') {
             steps {
                 sh "mvn clean package"
             }
-         }
+        }
         stage('Build Docker Image') {
             steps {
-               sh "docker build -t kuber416/maven-web-application:${TAG} ."
-            } 
-         } 
-       stage('Push Docker image to Docker Hub registry') {
-           steps {
-            withCredentials([string(credentialsId: 'DOCKER_HUB_PASSWORD', variable: 'DOCKER_HUB_PASSWORD')]) {
-                 sh "docker login -u kuber416 -p ${DOCKER_HUB_PASSWORD}"
-                 sh "docker push kuber416/maven-web-application:${TAG}"
-                 }
-              }
+                sh "docker build -t kuber416/maven-web-application:${TAG} ."
             }
-      stage('update Yaml file') {
+        }
+        stage('Push Docker image to Docker Hub registry') {
             steps {
-                sh "sed -i 's/TAG/$TAG/' mavenwebappdeployment.yaml"
-           }
-       } 
-       stage('Deploy to kubernetes EKS') {
-           steps {
-              script {
-                 sh "aws eks update-kubeconfig --name demo-cluster-1 --region ap-south-1"
-                 sh "pwd"
-                 sh "export PATH=$PATH:/var/lib/jenkins/workspace/maven_web_application"
-                 sh "whoami"
-                 sh " sudo cp /home/ec2-user/.kube/config /var/lib/jenkins/workspace/maven_web_application/.kube/config"
-                 sh " sudo chown -R jenkins:jenkins /var/lib/jenkins/workspace/maven_web_application/.kube/config"
-                 sh " kubeconfig(credentialsId: 'k8s_creds', serverUrl: '') {
-                 sh "/var/lib/jenkins/workspace/maven_web_application/kubectl apply -f mavenwebappdeployment.yaml --validate=false"
-                  }
+                withCredentials([string(credentialsId: 'DOCKER_HUB_PASSWORD', variable: 'DOCKER_HUB_PASSWORD')]) {
+                    sh "docker login -u kuber416 -p ${DOCKER_HUB_PASSWORD}"
+                    sh "docker push kuber416/maven-web-application:${TAG}"
                 }
-              }
-           }
-         }
-       }
+            }
+        }
+        stage('update Yaml file') {
+            steps {
+                sh "sed -i 's/TAG/${TAG}/' mavenwebappdeployment.yaml"
+            }
+        }
+        stage('Deploy to kubernetes EKS') {
+            steps {
+                sh "kubectl apply -f mavenwebappdeployment.yaml"
+            }
+        }
+    }
+    post {
+        success {
+            echo 'Pipeline completed successfully!'
+        }
+        failure {
+            echo 'Pipeline failed.'
+        }
+    }
+}
