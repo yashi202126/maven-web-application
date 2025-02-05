@@ -32,7 +32,7 @@ pipeline {
         }
         stage('update Yaml file') {
             steps {
-                sh "sed -i 's/TAG/${TAG}/' mavenwebappdeployment.yaml"
+                sh "sed -i 's/TAG/${TAG}/' mavenwebappdeployment.yaml  --validate=false"
             }
         }
         stage('Deploy to kubernetes EKS') {
