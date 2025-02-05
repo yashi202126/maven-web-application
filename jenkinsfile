@@ -41,7 +41,7 @@ pipeline {
                 sh "kubectl apply -f mavenwebappdeployment.yaml"
             }
         }
-    post {
+        post {
         success {
             echo 'Pipeline completed successfully!'
         }
@@ -49,5 +49,4 @@ pipeline {
             echo 'Pipeline failed.'
         }
     }
-  }
 }
