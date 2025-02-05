@@ -38,10 +38,8 @@ pipeline {
        } 
        stage('Deploy to kubernetes EKS') {
            steps {
-                scripts {
-                  sh "kubectl apply -f mavenwebappdeployment.yaml"
+                sh "kubectl apply -f mavenwebappdeployment.yaml"
                   }
                 }
               }
            }
-        }
