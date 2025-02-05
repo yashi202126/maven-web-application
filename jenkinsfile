@@ -39,7 +39,7 @@ pipeline {
        stage('Deploy to kubernetes EKS') {
            steps {
               script {
-                 sh " ('aws eks update-kubeconfig --name demo-cluster-1 --region ap-south-1')
+                 sh "aws eks update-kubeconfig --name demo-cluster-1 --region ap-south-1"
                  sh "kubectl apply -f mavenwebappdeployment.yaml -n usecaes "
                   }
                 }
