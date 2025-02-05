@@ -1,6 +1,4 @@
-try this scrip 
- 
-pipeline {
+ pipeline {
 
     agent any
 
