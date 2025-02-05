@@ -43,6 +43,7 @@ pipeline {
                  sh "pwd"
                  sh "export PATH=$PATH:/var/lib/jenkins/workspace/maven_web_application"
                  sh "whoami"
+                 sh " sudo chown -R jenkins:jenkins kubectl"
                  sh "kubectl apply -f mavenwebappdeployment.yaml"
                   }
                 }
