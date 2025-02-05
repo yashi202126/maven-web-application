@@ -37,12 +37,10 @@ pipeline {
         }
         stage('Deploy to kubernetes EKS') {
             steps {
-                kubeconfig(credentialsId: 'k8s_creds', serverUrl: '') {
-                 // some block
+                
                 sh "kubectl apply -f mavenwebappdeployment.yaml"
             }
         }
-    }
     post {
         success {
             echo 'Pipeline completed successfully!'
