@@ -46,7 +46,6 @@ pipeline {
                  sh " sudo cp /home/ec2-user/.kube/config /var/lib/jenkins/workspace/maven_web_application/.kube/config"
                  sh " sudo chown -R jenkins:jenkins /var/lib/jenkins/workspace/maven_web_application/.kube/config"
                  sh " kubeconfig(credentialsId: 'k8s_creds', serverUrl: '') {
-                     // some block
                  sh "/var/lib/jenkins/workspace/maven_web_application/kubectl apply -f mavenwebappdeployment.yaml --validate=false"
                   }
                 }
