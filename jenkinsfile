@@ -40,7 +40,7 @@ pipeline {
            steps {
               script {
                  sh "aws eks update-kubeconfig --name demo-cluster-1 --region ap-south-1"
-                 sh "kubectl apply -f mavenwebappdeployment.yaml"
+                 sh "/usr/local/bin/kubectl apply -f mavenwebappdeployment.yaml"
                   }
                 }
               }
