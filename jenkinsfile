@@ -76,7 +76,7 @@
 
             steps {
 
-                sh "kubectl apply -f mavenwebappdeployment.yaml"
+                sh "kubectl apply -f mavenwebappdeployment.yaml --validate=false"
 
             }
 
