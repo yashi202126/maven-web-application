@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: mavenwebappdeployment
-  namespcaces: demousecases
+  namespcaces: demo-usecases
 spec:
   revisionHistoryLimit: 10
   replicas: 2
