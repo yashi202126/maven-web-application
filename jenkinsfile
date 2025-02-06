@@ -11,7 +11,8 @@
     environment {
 
         TAG = "${BUILD_NUMBER}"
-
+        KUBECONFIG = "/root/.kube/config"
+       
     }
 
     stages {
@@ -20,7 +21,7 @@
 
             steps {
 
-                git credentialsId: 'github', url: 'https://github.com/kuber416/maven-web-application.git'
+                git credentialsId: 'github', url: 'https://github.com/kuber416/maven-web-app.git'
 
             }
 
@@ -40,7 +41,7 @@
 
             steps {
 
-                sh "docker build -t kuber416/maven-web-application:${TAG} ."
+                sh "docker build -t kuber416/maven-web-appication:${TAG} ."
 
             }
 
@@ -54,7 +55,7 @@
 
                     sh "docker login -u kuber416 -p ${DOCKER_HUB_PASSWORD}"
 
-                    sh "docker push kuber416/maven-web-application:${TAG}"
+                    sh "docker push kuber416/maven-web-applicatio:${TAG}"
 
                 }
 
@@ -66,23 +67,19 @@
 
             steps {
 
-                sh "sed -i 's/TAG/${TAG}/' mavenwebappdeployment.yaml"
+                sh "sed -i 's/TAG/${TAG}/'mavenwebappdeployment.yaml "
 
             }
 
         }
-        stage('Authenticate with EKS') {
-            steps{
-               sh "aws eks --region ap-south-1 update-kubeconfig --name devops-demo" 
-             }
-          }
+       
 
         stage('Deploy to kubernetes EKS') {
 
             steps {
           
-
-                sh "kubectl apply -f mavenwebappdeployment.yaml --validate=false"
+               
+                sh "sudo KUBECONFIG=/root/.kube/config kubectl apply -f mavenwebappdeployment.yaml -n demo-usecases --validate=false"
 
             }
 
@@ -100,7 +97,7 @@
 
         failure {
 
-            echo 'Pipeline failed.'
+            echo 'Pipeline failed !'
 
         }
 
