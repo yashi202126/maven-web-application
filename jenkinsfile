@@ -67,7 +67,7 @@
 
             steps {
 
-                sh "sed -i 's/TAG/${TAG}/'mavenwebappdeployment.yaml"
+                sh "sed -i s/TAG/${TAG}/ mavenwebappdeployment.yaml"
 
             }
 
