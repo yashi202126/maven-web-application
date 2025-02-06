@@ -41,7 +41,7 @@
 
             steps {
 
-                sh "docker build -t kuber416/maven-web-appication:${TAG} ."
+                sh "docker build -t kuber416/mavenwebapp111:${TAG} ."
 
             }
 
@@ -55,7 +55,7 @@
 
                     sh "docker login -u kuber416 -p ${DOCKER_HUB_PASSWORD}"
 
-                    sh "docker push kuber416/maven-web-application:${TAG}"
+                    sh "docker push kuber416/mavenwebapp111:${TAG}"
 
                 }
 
