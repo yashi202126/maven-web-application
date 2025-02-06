@@ -21,7 +21,7 @@
 
             steps {
 
-                git credentialsId: 'github', url: 'https://github.com/kuber416/maven-web-app.git'
+                git credentialsId: 'github', url: 'https://github.com/kuber416/maven-web-application.git'
 
             }
 
