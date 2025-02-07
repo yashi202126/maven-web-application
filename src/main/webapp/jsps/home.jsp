@@ -35,7 +35,7 @@ out.println("Server Host Name :: "+inetAddress.getHostName());
 	</span>
 	<span style="font-weight: bold;">
 		Demo usecases, 
-		Martha Halli, Above ICICI Bank, Beside Meghana Foods,
+		Roopena agrahara NGR loyout Bommanahalli,
 		Bangalore,
 		+91-9902492760,+91-9741605376
 		kuberst88@gmail.com
