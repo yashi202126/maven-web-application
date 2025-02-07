@@ -10,7 +10,7 @@
 </head>
 <body>
 <h1 align="center">Welcome come to demo-usecases. Bengaluru,Karnataka,India</h1>
-<h1 align="center"> welcome to the demo use cases. Demonstration will be done on Friday feb 7th</h1>
+<h1 align="center"> welcome to the demo use cases. Demonstration will be done on Friday feb 7th evening </h1>
 <hr>
 <br>
 	<h1><h3> Server Side IP Address </h3><br>
