@@ -9,7 +9,7 @@
 </head>
 </head>
 <body>
-<h1 align="center">Welcome come to demo-usecases. Ph No: +91-9741605376 ,Bengaluru,Karnataka,India</h1>
+<h1 align="center">Welcome come to demo-usecases. Bengaluru,Karnataka,India</h1>
 <h1 align="center"> welcome to the demo use cases. Demonstration will be done on Friday feb 7th</h1>
 <hr>
 <br>
