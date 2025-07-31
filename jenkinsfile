@@ -1,83 +1,51 @@
- pipeline {
-
+pipeline {
     agent any
 
     tools {
-
         maven "MAVEN"
-
     }
 
     environment {
-
         TAG = "${BUILD_NUMBER}"
     }
 
     stages {
-
-        stage('git-Clone') {
-
+        stage('Clone Git Repository') {
             steps {
-
                 git credentialsId: 'github', url: 'https://github.com/yashi202126/maven-web-application'
-
             }
-
         }
 
-        stage('Build the package') {
-
+        stage('Build the Package') {
             steps {
-
                 sh "mvn clean package"
-
             }
-
         }
 
         stage('Build Docker Image') {
-
             steps {
-
                 sh "docker build -t purudocker12/mavenwebapp111:${TAG} ."
-
             }
-
         }
 
-        stage('Push Docker image to Docker Hub registry') {
-
+        stage('Push Docker Image to Docker Hub') {
             steps {
-
                 withCredentials([string(credentialsId: 'DOCKER_HUB_PASSWORD', variable: 'DOCKER_HUB_PASSWORD')]) {
-
-                    sh "docker login -u purudocker12 -p ${DOCKER_HUB_PASSWORD}"
-
+                    sh "echo ${DOCKER_HUB_PASSWORD} | docker login -u purudocker12 --password-stdin"
                     sh "docker push purudocker12/mavenwebapp111:${TAG}"
                     sh "docker run -d --name mavenwebapp-container -p 8080:8080 purudocker12/mavenwebapp111:${TAG}"
                 }
-
             }
-
         }
-
-        
+    }
 
     post {
-
         success {
-
-            echo 'Pipeline completed successfully!'
-
+            echo '✅ Pipeline completed successfully!'
         }
-
         failure {
-
-            echo 'Pipeline failed !'
-
+            echo '❌ Pipeline failed!'
         }
-
     }
- }
 }
- 
+
