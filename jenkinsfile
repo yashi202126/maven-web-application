@@ -11,8 +11,6 @@
     environment {
 
         TAG = "${BUILD_NUMBER}"
-        
-       
     }
 
     stages {
@@ -80,6 +78,6 @@
         }
 
     }
-
+ }
 }
  
