@@ -30,8 +30,7 @@ pipeline {
 
         stage('Push Docker Image to Docker Hub') {
             steps {
-                withCredentials([string(credentialsId: 'DOCKER_HUB_PASSWORD', variable: 'DOCKER_HUB_PASSWORD')]) {
-                    sh "echo ${DOCKER_HUB_PASSWORD} | docker login -u purudocker12 --password-stdin"
+                    sh "docker login -u purudocker12 -p Yashi9533*&"
                     sh "docker push purudocker12/mavenwebapp111:${TAG}"
                     sh "docker run -d --name mavenwebapp-container -p 8080:8080 purudocker12/mavenwebapp111:${TAG}"
                 }
