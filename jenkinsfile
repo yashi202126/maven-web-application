@@ -11,7 +11,7 @@
     environment {
 
         TAG = "${BUILD_NUMBER}"
-        KUBECONFIG = "/root/.kube/config"
+        
        
     }
 
@@ -63,29 +63,7 @@
 
         }
 
-        stage('update Yaml file') {
-
-            steps {
-
-                sh "sed -i s/TAG/${TAG}/ mavenwebappdeployment.yaml"
-
-            }
-
-        }
-       
-
-        stage('Deploy to kubernetes EKS') {
-
-            steps {
-          
-               
-                sh "sudo KUBECONFIG=/root/.kube/config kubectl apply -f mavenwebappdeployment.yaml -n demo-usecases --validate=false"
-
-            }
-
-        }
-
-    }
+        
 
     post {
 
